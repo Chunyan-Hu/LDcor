@@ -1,6 +1,6 @@
 #!/usr/bin/Rscript
 
-## Rscript /media/tyloo/huchy/ani_from_zhou/slim/2.1.1.test_V_vs_Va.r /media/tyloo/huchy/ani_from_zhou/slim/my_1.demography.e6.1/all.indiv.dac_test/ S 1 my_21.demography_1.e6.1.txt.p1_p2.vcf # daf=100%
+## Rscript 2.1.3.this_V_vs_Va.r $1/ vep 5 $1 2 ## Max derived allele count = 5
 
 library(boot)
 library("matrixStats")
