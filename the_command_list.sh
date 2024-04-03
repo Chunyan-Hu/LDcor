@@ -1,6 +1,8 @@
 
+## bash the_command_list.sh panda.withaa.v1 vcf_file panda 101
+
 mkdir basic_info/
-vcftools --gzvcf $2/$1.vcf.gz --remove-filtered-all --hwe 1e-6 --max-missing 1 --counts2 --derived --max-alleles 2 --min-alleles 2--remove-indels --out basic_info/$1 &&  ## --derived must work 
+vcftools --gzvcf $2/$1.vcf.gz --remove-filtered-all --hwe 1e-6 --max-missing 1 --counts2 --derived --max-alleles 2 --min-alleles 2--remove-indels --out basic_info/$1 &&
 vcftools --gzvcf $2/$1.vcf.gz --remove-filtered-all --hwe 1e-6 --max-missing 1 --get-INFO AA --max-alleles 2 --min-alleles 2 --remove-indels --out basic_info/$1 &&
 python scripts/filteraa_calls.py basic_info/ $1 && # get $1.frq.count.uppercaseaa && $1.INFO.uppercaseaa
 less basic_info/$1.INFO.uppercaseaa | cut -f1,2 | sed 1d > basic_info/$1.pos.uppercaseaa &&
@@ -33,6 +35,6 @@ for ii in {"splicenonsense","missense","codingsynononly"}
 do
 	python scripts/2.mac_count_all_data_byloci_chr.py basic_info/$1.sample.txt $1/ $1 vep $ii $1/ 
 done
-echo done
+echo "ready for calculation"
 
 
