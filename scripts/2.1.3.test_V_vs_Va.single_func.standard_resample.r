@@ -1,6 +1,6 @@
 #!/usr/bin/Rscript
 
-## Rscript /media/sheldon/huchy/ani_from_zhou/2021.08.30/2.1.3.test_V_vs_Va.single_func.standard_resample.r /media/sheldon/huchy/ani_from_zhou/2021.08.30/02.V_vs_Va.unrelated/panda/ vep 2 panda 2 splicenonsense missense 100
+## Rscript scripts/2.1.3.test_V_vs_Va.single_func.standard_resample.r panda.withaa.v1/ vep 2 panda.withaa.v1 2 splicenonsense missense 100
 
 library(boot)
 library("matrixStats")
@@ -18,7 +18,7 @@ maxdac <- as.numeric(args[3]) # 2
 # 35
 mpathnum=""
 corr <- ""
-group<- args[4] # panda.v3/
+group<- args[4] 
 ##### set paramaters ############
 mindac <- args[5] # 2
 names.vec<- args[6]  # splicenonsense
