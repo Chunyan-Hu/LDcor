@@ -1,0 +1,69 @@
+
+initialize() {
+
+        // Generate random genes along approximately 1Mb
+        defineConstant("L", 1e6);
+
+        // one recombination rate
+        initializeRecombinationRate(1e-08);
+
+        // one mutation rate
+        initializeMutationRate(1.29e-8);
+
+        // one genomic element
+        initializeMutationType('m1', 0.5, 'f', -0.1);
+        initializeGenomicElementType('g1', c(m1), c(1.0));
+        initializeGenomicElement(g1, 0, L-1);
+}
+
+// Create the ancestral population
+1 { sim.addSubpop('p1', 20850);
+}
+
+// Split Qin at T1, 304664 years ago
+1000 {
+  sim.addSubpopSplit('p2', 4951, p1);
+  p1.setMigrationRates(c(p2), c(0));
+  p2.setMigrationRates(c(p1), c(0));
+}
+
+// Expanda non-Qin(p1) to 47868 and shrink Qin(p2) to 981 at T2, 38879 years ago +22149
+1000:23149 {
+  t = sim.generation - 1000;
+  p1_size = round(15899 * exp(0.000049763 * t));
+  p1.setSubpopulationSize(asInteger(p1_size));
+  p2_size = round(4951 * exp(-0.00007309 * t));
+  p2.setSubpopulationSize(asInteger(p2_size));
+}
+
+// shrink non-Qin(q1) gradually, from T2 to T3
+// Set up exponential growth, [ln(695/47868)]/3008
+// Where N(0) is the base subpopulation size and t = gen - 23149:
+23149:26157{
+  t = sim.generation - 23149;
+  p1_size = round(47868 * exp(-0.001407 * t));
+  p1.setSubpopulationSize(asInteger(p1_size));
+}
+
+// Non-Qin(q1)(695) split it into Min(q3) and Qxl at T3, 2777 years ago +3008
+26157 { sim.addSubpopSplit('p3', 480, p1);
+}
+
+// Expanda non-Qin(p3_847, p1_3726) and shrink Qin(p2_169) at T4, present +231
+26157:26388 { 
+  t = sim.generation - 26157;
+  p3_size = round(480 * exp(0.0024585047 * t));
+  p3.setSubpopulationSize(asInteger(p3_size));
+  p1_size = round(215 * exp(0.01234828 * t));
+  p1.setSubpopulationSize(asInteger(p1_size));
+  p2_size = round(1686 * exp(-0.00995764 * t));
+  p2.setSubpopulationSize(asInteger(p2_size));
+}
+
+26388 late () {
+p1.outputVCFSample(sampleSize=3726,replace = F, outputMultiallelics = F , filePath='/media/sheldon/huchy/ani_from_zhou/20220816/sim_demography/panda/panda_p1_h05_r08_runmark.vcf');
+p2.outputVCFSample(sampleSize=169,replace = F, outputMultiallelics = F , filePath='/media/sheldon/huchy/ani_from_zhou/20220816/sim_demography/panda/panda_p2_h05_r08_runmark.vcf');
+p3.outputVCFSample(sampleSize=847,replace = F, outputMultiallelics = F , filePath='/media/sheldon/huchy/ani_from_zhou/20220816/sim_demography/panda/panda_p3_h05_r08_runmark.vcf');
+sim.simulationFinished();
+}
+

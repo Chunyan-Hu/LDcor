@@ -1,0 +1,41 @@
+
+initialize() {
+
+        // Generate random genes along approximately 1Mb
+        defineConstant("L", 1e6);
+
+        // one recombination rate
+        initializeRecombinationRate(1e-08);
+
+        // one mutation rate
+        initializeMutationRate(1.36e-8);
+
+        // one genomic element
+        initializeMutationType('m1', 0.5, 'f', -0.1);
+        initializeGenomicElementType('g1', c(m1), c(1.0));
+        initializeGenomicElement(g1, 0, L-1);
+}
+
+// Create the ancestral population at pre, 64800 years ago
+1 { sim.addSubpop('p1', 41800);
+}
+
+// Split nuPre(possible isolation) at ~20kya, 20000 years ago +4480
+4480 { sim.addSubpopSplit('p2', 23400, p1);
+}
+
+//Shrink SNJ(p1) to 8200 and shrink non-SNJ(p2) to 55600 at T +2000
+4480:6480 {
+  t = sim.generation - 4480;
+  p1_size = round(18400 * exp(-0.000404108 * t));
+  p1.setSubpopulationSize(asInteger(p1_size));
+  p2_size = round(23400 * exp(0.0004327236 * t));
+  p2.setSubpopulationSize(asInteger(p2_size));
+}
+
+6480 late () {
+p1.outputVCFSample(sampleSize=8200,replace = F, outputMultiallelics = F , filePath='/media/sheldon/huchy/ani_from_zhou/20220816/sim_demography/goldenSM/goldenSM_p1_h05_r08_runmark.vcf');
+p2.outputVCFSample(sampleSize=55600,replace = F, outputMultiallelics = F , filePath='/media/sheldon/huchy/ani_from_zhou/20220816/sim_demography/goldenSM/goldenSM_p2_h05_r08_runmark.vcf');
+sim.simulationFinished();
+}
+
