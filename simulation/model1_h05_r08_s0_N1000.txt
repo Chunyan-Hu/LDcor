@@ -1,0 +1,40 @@
+initialize() {
+
+	// Generate random genes along approximately 1Mb
+	defineConstant("L", 1e6);	
+
+        // one recombination rate
+	initializeRecombinationRate(1e-08);
+	
+	// one mutation rate
+	initializeMutationRate(1.5e-8);
+	
+	// one genomic element
+        initializeMutationType('m1', 0.5, 'f', 0);
+        initializeGenomicElementType('g1', c(m1), c(1.0));
+	initializeGenomicElement(g1, 0, L-1);
+
+}
+
+1 { sim.addSubpop('p1', 1000); }
+
+1: late() {
+
+if (sim.generation % 100 == 0) { cat(sim.generation + '\n'); }
+
+if (sim.generation == 58000) {
+
+cat('VCFOutput START' + '\n');
+
+p1.outputVCFSample(sampleSize=1000, outputMultiallelics = F, filePath='/sharedata/huchunyan/生物多样性信息学研究组Private/SLIs/slim_data/model1_h05_r08_N1000/model1_h05_r08_s0_N1000.runmark.vcf');
+
+cat('VCFOutput END');
+
+ sim.simulationFinished(); }
+
+ }
+58001 {
+
+sim.simulationFinished();
+
+}

@@ -1,0 +1,42 @@
+initialize() {
+
+	// Generate random genes along approximately 1Mb
+	defineConstant("L", 1e6);	
+
+        // one recombination rate
+	initializeRecombinationRate(1e-08);
+	
+	// one mutation rate
+	initializeMutationRate(1.5e-8);
+	
+	// one genomic element
+        initializeMutationType('m1', 0.5, 'f', -0.1);
+        initializeGenomicElementType('g1', c(m1), c(1.0));
+	initializeGenomicElement(g1, 0, L-1);
+}
+
+1 { sim.addSubpop('p1', 10000); }
+
+1:58000 { if (sim.generation % 1000 == 0) { cat(sim.generation + '\n'); } }
+
+58000 late() {
+
+	p1.setSubpopulationSize(700);
+	p1.outputVCFSample(sampleSize=700, outputMultiallelics = F, filePath='/sharedata/huchunyan/生物多样性信息学研究组Private/SLIs/07.varying_bottleneck/slim_data/model1_h05_r08_bottleneck1/model1_h05_r08_bottleneck1_runmark_time0.vcf');
+
+}
+
+58000:58100 late() {
+
+	if (sim.generation == 58002) { p1.outputVCFSample(sampleSize=700, outputMultiallelics = F, filePath='/sharedata/huchunyan/生物多样性信息学研究组Private/SLIs/07.varying_bottleneck/slim_data/model1_h05_r08_bottleneck1/model1_h05_r08_bottleneck1_runmark_time1.vcf'); }
+	if (sim.generation == 58004) { p1.outputVCFSample(sampleSize=700, outputMultiallelics = F, filePath='/sharedata/huchunyan/生物多样性信息学研究组Private/SLIs/07.varying_bottleneck/slim_data/model1_h05_r08_bottleneck1/model1_h05_r08_bottleneck1_runmark_time2.vcf'); }
+	if (sim.generation == 58006) { p1.outputVCFSample(sampleSize=700, outputMultiallelics = F, filePath='/sharedata/huchunyan/生物多样性信息学研究组Private/SLIs/07.varying_bottleneck/slim_data/model1_h05_r08_bottleneck1/model1_h05_r08_bottleneck1_runmark_time3.vcf'); }
+	if (sim.generation == 58008) { p1.outputVCFSample(sampleSize=700, outputMultiallelics = F, filePath='/sharedata/huchunyan/生物多样性信息学研究组Private/SLIs/07.varying_bottleneck/slim_data/model1_h05_r08_bottleneck1/model1_h05_r08_bottleneck1_runmark_time4.vcf'); }
+	if (sim.generation == 58010) { p1.outputVCFSample(sampleSize=700, outputMultiallelics = F, filePath='/sharedata/huchunyan/生物多样性信息学研究组Private/SLIs/07.varying_bottleneck/slim_data/model1_h05_r08_bottleneck1/model1_h05_r08_bottleneck1_runmark_time5.vcf'); }
+	if (sim.generation == 58050) { p1.outputVCFSample(sampleSize=700, outputMultiallelics = F, filePath='/sharedata/huchunyan/生物多样性信息学研究组Private/SLIs/07.varying_bottleneck/slim_data/model1_h05_r08_bottleneck1/model1_h05_r08_bottleneck1_runmark_time6.vcf'); }
+	if (sim.generation == 58100) { p1.outputVCFSample(sampleSize=700, outputMultiallelics = F, filePath='/sharedata/huchunyan/生物多样性信息学研究组Private/SLIs/07.varying_bottleneck/slim_data/model1_h05_r08_bottleneck1/model1_h05_r08_bottleneck1_runmark_time7.vcf'); }
+
+}
+
+58101 late() { sim.simulationFinished(); }
+
