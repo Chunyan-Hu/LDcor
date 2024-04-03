@@ -1,6 +1,6 @@
 #!/usr/bin/Rscript
 
-## Rscript 2.1.3.this_V_vs_Va.r $1/ vep 5 $1 2 ## Max derived allele count = 5
+## Rscript scripts/2.1.3.this_V_vs_Va.r $1/ vep 5 $1 2 ## Max derived allele count = 5
 
 library(boot)
 library("matrixStats")
