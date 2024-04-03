@@ -19,8 +19,9 @@ maxdac <- as.numeric(args[3])
 mpathnum=""
 corr <- ""
 group<- args[4]
+mindac <-as.numeric(args[5])
 ##### set paramaters ############
-mindac <- 1
+# mindac <- 1
 setwd(mpath)
 #names.vec <- c("-0.1", "-0.01", "-0.001","-0.0001","-1e-5","0")	
 names.vec <- c("splicenonsense","missense","codingsynononly")
@@ -36,7 +37,7 @@ for (funcii in c(1:length(names.vec))){
 	loads <- as.matrix(fread(fname,nThread=10))
 	colnames(loads) <- NULL # now we get a matrix with Nindivs rows, and each column is of a locus
 	gnsample <- nrow(loads)
-	loadsff <- loads[,colSums(abs(loads)) != 0] # we consider mutated loci only 
+	loadsff <- loads[,colSums(abs(loads)) >= mindac] # we consider mutated loci only 
 	rm(loads)
 	loads <- loadsff[,colSums(abs(loadsff)) <= maxdac] # further, we can limit the maxdac
 	rm(loadsff)
