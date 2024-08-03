@@ -36,7 +36,12 @@ To reproduce the simulations presented in paper, you need [SLiM 3.6].
 The calculation based on population-level VCF file with ancestral allele added in the INFO column.
 
 ## Project Layout
-When you prepared an environment with "Prerequisites" met and input data, you can follow the command lines listed in "the_command_list.sh".
+When you prepared an environment with "Prerequisites" met and input data, you can follow the command lines listed in "the_command_list.sh" to get the exactly input fro calculating of LDcor:
+usage: bash the_command_list.sh vcfname vcf_file_directory speciesName_in_vep vepVersion (e.g., bash the_command_list.sh panda.withaa /path/to/panda.withaa.vcf.gz panda 110).
+After this step, you will find files vcfname/vcfname.ALL.dac.frq.count.codingsynononly/missense/splicenonsense.vep.uppercaseaa.hist (one row per individual, one line per variant). Detailed input and output for each step are annotated in the header of scripts.
+now run scripts/2.1.3.test_V_vs_Va.r and scripts/2.1.3.test_V_vs_Va.single_func.standard_resample.r to get LDcor:
+usage: Rscript scripts/2.1.3.test_V_vs_Va.r vcfname/ vep 5 vcfname 2 ## Max derived allele count = 5
+usage: Rscript script scripts/2.1.3.test_V_vs_Va.single_func.standard_resample.r vcfname/ vep 5 vcfname 2 splicenonsense missense 100 
 
 ## Source data of this study
 The data and scripts for figures of the related paper are collected in "paper_fig_code/".

@@ -14,7 +14,7 @@ python scripts/mac_find_indivs_data.py basic_info/ $1 uppercaseaa &&
 singularity exec -B /path/to/local/.vep:/home/.vep,/path/to/this/basic_info:/home/basic_info vep.sif vep --cache --offline --species $3 --dir_cache /home/.vep --format vcf -i /home/basic_info/$1.INFO.uppercaseaa.vepinput -o /home/basic_info/$1.vep_output.txt --everything --pick --force_overwrite --fork 8 --cache_version ${4:-101} &&
 grep -v "#" basic_info/$1.vep_output.txt | cut -f 2,4,7 > $1/$1.functype.vep.txt &&
 cp basic_info/$1.frq.count.indiv.uppercaseaa $1/ &&
-python scripts/merge_variants_types_given_vep.py $1/ $1 vep &&bcftools query -l 01.get_AA/file_v0/$ii.v0.recode.vcf.gz > samples/$ii.sample.txt
+python scripts/merge_variants_types_given_vep.py $1/ $1 vep &&
 gzip basic_info/$1.uppercaseaa.GT.FORMAT &&
 cd $1/ &&
 { 

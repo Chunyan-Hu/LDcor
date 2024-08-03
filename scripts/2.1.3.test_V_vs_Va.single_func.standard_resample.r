@@ -1,6 +1,6 @@
 #!/usr/bin/Rscript
 
-## Rscript scripts/2.1.3.test_V_vs_Va.single_func.standard_resample.r panda.withaa.v1/ vep 2 panda.withaa.v1 2 splicenonsense missense 100
+## Rscript scripts/2.1.3.test_V_vs_Va.single_func.standard_resample.r vcfname/ vep 5 vcfname 2 splicenonsense missense 100
 
 library(boot)
 library("matrixStats")
